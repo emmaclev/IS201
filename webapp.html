@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmo's Road Run</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #87ceeb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Arial', sans-serif;
+    }
+    canvas {
+      border: 2px solid black;
+      background-color: #fff;
+    }
+    h1 {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.5rem;
+      color: #ff6347;
+    }
+    #game-over {
+      position: absolute;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2rem;
+      color: red;
+      display: none;
+    }
+    #restart {
+      position: absolute;
+      top: 180px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+      background-color: #ff6347;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cosmo's Road Run</h1>
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
+  <div id="game-over">Game Over! Press "R" to Restart</div>
+  <button id="restart" onclick="restartGame()">Restart</button>
+
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const playerWidth = 50;
+    const playerHeight = 50;
+    let playerX = canvas.width / 2 - playerWidth / 2;
+    let playerY = canvas.height - playerHeight - 10;
+    let playerSpeed = 5;
+    let gravity = 0.5;
+    let jumpStrength = -15;
+    let isJumping = false;
+    let jumpVelocity = 0;
+
+    let cars = [];
+    let carWidth = 50;
+    let carHeight = 30;
+    let carSpeed = 3;
+
+    let isGameOver = false;
+    let score = 0;
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    function handleKeyDown(event) {
+      if (event.key === "ArrowLeft") {
+        if (playerX > 0) playerX -= playerSpeed;
+      } else if (event.key === "ArrowRight") {
+        if (playerX + playerWidth < canvas.width) playerX += playerSpeed;
+      } else if (event.key === " ") {
+        if (!isJumping) {
+          isJumping = true;
+          jumpVelocity = jumpStrength;
+        }
+      } else if (event.key === "r" && isGameOver) {
+        restartGame();
+      }
+    }
+
+    function spawnCar() {
+      let carX = Math.floor(Math.random() * (canvas.width - carWidth));
+      cars.push({ x: carX, y: -carHeight });
+    }
+
+    function restartGame() {
+      isGameOver = false;
+      cars = [];
+      score = 0;
+      playerX = canvas.width / 2 - playerWidth / 2;
+      playerY = canvas.height - playerHeight - 10;
+      document.getElementById("game-over").style.display = "none";
+      document.getElementById("restart").style.display = "none";
+      gameLoop();
+    }
+
+    function updatePlayer() {
+      if (isJumping) {
+        playerY += jumpVelocity;
+        jumpVelocity += gravity;
+        if (playerY >= canvas.height - playerHeight - 10) {
+          playerY = canvas.height - playerHeight - 10;
+          isJumping = false;
+          jumpVelocity = 0;
+        }
+      }
+    }
+
+    function updateCars() {
+      for (let i = 0; i < cars.length; i++) {
+        cars[i].y += carSpeed;
+        if (cars[i].y > canvas.height) {
+          cars.splice(i, 1);
+          score++;
+          i--;
+        }
+      }
+    }
+
+    function checkCollisions() {
+      for (let i = 0; i < cars.length; i++) {
+        if (
+          playerX < cars[i].x + carWidth &&
+          playerX + playerWidth > cars[i].x &&
+          playerY < cars[i].y + carHeight &&
+          playerY + playerHeight > cars[i].y
+        ) {
+          gameOver();
+        }
+      }
+    }
+
+    function gameOver() {
+      isGameOver = true;
+      document.getElementById("game-over").style.display = "block";
+      document.getElementById("restart").style.display = "inline-block";
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw player
+      ctx.fillStyle = "blue";
+      ctx.fillRect(playerX, playerY, playerWidth, playerHeight);
+
+      // Draw cars
+      ctx.fillStyle = "red";
+      for (let i = 0; i < cars.length; i++) {
+        ctx.fillRect(cars[i].x, cars[i].y, carWidth, carHeight);
+      }
+
+      // Draw score
+      ctx.fillStyle = "black";
+      ctx.font = "16px Arial";
+      ctx.fillText("Score: " + score, 10, 20);
+    }
+
+    function gameLoop() {
+      if (isGameOver) return;
+
+      updatePlayer();
+      updateCars();
+      checkCollisions();
+      draw();
+
+      if (Math.random() < 0.02) spawnCar();
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();
+  </script>
+</body>
+</html> 
+
+
+
+
+
+
+
+

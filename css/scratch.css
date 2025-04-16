@@ -1,0 +1,139 @@
+/* Import a cute font for h1 (Pacifico is adorable!) */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+body {
+  background-color: #fff8f0;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  padding: 20px;
+  text-align: center; /* Center everything */
+  margin: 0;
+}
+
+/* Make all headings bigger and colorful */
+h1 {
+  font-family: 'Pacifico', cursive; /* Cute font just for h1 */
+  font-size: 4rem; /* Large and lovely */
+  color: #d94f4f;
+  background-color: #ffe5e5;
+  border: 8px solid #f28c8c; /* Thick border to match your theme */
+  border-radius: 15px;
+  padding: 25px 40px;
+  display: inline-block;
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: #d2691e;
+  margin-top: 0;
+}
+
+h3 {
+  font-size: 2rem;
+  color: #d2691e;
+}
+
+h4 {
+  font-size: 1.8rem;
+  color: #d2691e;
+}
+
+/* Links */
+a {
+  color: #007acc;
+  text-decoration: none;
+  margin: 0 15px;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Centered image styling */
+img {
+  display: block;
+  margin: 20px auto;
+  border-radius: 10px;
+  max-width: 90%;
+  height: auto;
+}
+
+/* Centered and styled video */
+iframe {
+  display: block;
+  margin: 20px auto;
+  border: 4px solid #f4cccc;
+  border-radius: 10px;
+  max-width: 100%;
+}
+
+/* Center the main list of ice cream brands */
+ol {
+    list-style-position: inside;
+    padding-left: 0;
+    text-align: center;
+    margin: 0;
+  }
+  
+  /* List items for the main list */
+  li {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    padding-left: 30px;
+  }
+  
+  /* Center the nested list (flavors) under each brand */
+  ol li ul {
+    list-style-position: inside;
+    padding-left: 0;
+    text-align: center;
+    margin-top: 10px;
+    display: inline-block;
+  }
+  
+  /* Add cute emoji bullets */
+  ul li::before {
+    content: "🍦";
+    position: absolute;
+    left: -20px;
+    font-size: 1.5rem;
+    top: 0;
+  }
+  
+  .tableauPlaceholder {
+    max-width: 900px;
+    margin: 40px auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    border-radius: 12px;
+  }
+  /* Header block */
+.header-section {
+    padding: 30px;
+    background-color: #ffe5e5;
+    border-radius: 15px;
+    margin-bottom: 40px;
+  }
+  
+  /* Ice cream brands block */
+  .brands-section {
+    background-color: #fff0f5;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 40px auto;
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  /* Video section block */
+  .video-section {
+    background-color: #e5f6ff;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 40px auto;
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  
